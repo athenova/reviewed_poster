@@ -63,5 +63,3 @@ def init():
 def make_tasks():
     editor = Editor(root_folder)
     editor.create_auto()
-
-review()
