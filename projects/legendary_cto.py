@@ -42,8 +42,8 @@ class LegendaryCtoBlogger(SimpleBlogger):
         super().__init__(posters=posters or self._posters(), force_rebuild=force_rebuild)
 
 class LegendaryCtoReviewer(LegendaryCtoBlogger):
-    def _check_task(self, task, tasks, days_before=1):
-        return super()._check_task(task, tasks, days_before)
+    def _check_task(self, task, days_before=1, **_):
+        return super()._check_task(task, days_before, **_)
     
 def review():
     blogger = LegendaryCtoReviewer(

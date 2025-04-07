@@ -42,8 +42,8 @@ class LegendaryPmBlogger(SimpleBlogger):
         super().__init__(posters=posters or self._posters(), force_rebuild=force_rebuild)
 
 class LegendaryPmReviewer(LegendaryPmBlogger):
-    def _check_task(self, task, tasks, days_before=1):
-        return super()._check_task(task, tasks, days_before)
+    def _check_task(self, task, days_before=1, **_):
+        return super()._check_task(task, days_before, **_)
     
 def review():
     blogger = LegendaryPmReviewer(
@@ -62,5 +62,3 @@ def init():
 def make_tasks():
     editor = Editor(root_folder)
     editor.create_simple(first_post_date=date(2025, 3, 9), days_between_posts=7)
-
-make_tasks()
