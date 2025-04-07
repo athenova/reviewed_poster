@@ -6,4 +6,4 @@ module = importlib.import_module(f"projects.{project_name}")
 if len(sys.argv)<3:
     module.post()
 else:
-    module.post(sys.argv[2])
+    module.post(index=sys.argv[2])

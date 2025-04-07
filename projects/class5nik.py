@@ -61,7 +61,7 @@ def review():
         blogger.post()
 
 def post(index=None):
-    blogger = PupilBlogger(index)
+    blogger = PupilBlogger(index=index)
     blogger.post()
 
 def init():
