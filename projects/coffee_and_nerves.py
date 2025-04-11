@@ -1,6 +1,6 @@
 from simple_blogger.blogger.auto import AutoBlogger
-from simple_blogger.poster.TelegramPoster import TelegramPoster
-from simple_blogger.poster.VkPoster import VkPoster
+from simple_blogger.poster.telegram import TelegramPoster
+from simple_blogger.poster.vk import VkPoster
 from simple_blogger.editor import Editor
 from simple_blogger.preprocessor.text import TagAdder
 from simple_blogger.generator.openai import OpenAiTextGenerator, OpenAiImageGenerator
