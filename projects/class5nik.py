@@ -1,20 +1,18 @@
-from simple_blogger.blogger.basic import SimpleBlogger
+from simple_blogger.blogger.finite import FiniteSimpleBlogger
 from simple_blogger.poster.telegram import TelegramPoster
 from simple_blogger.poster.vk import VkPoster
-from simple_blogger.editor import Editor
 from simple_blogger.preprocessor.text import TagAdder
 from simple_blogger.generator.openai import  OpenAiImageGenerator, OpenAiTextGenerator
 from datetime import date
 
 tagadder = TagAdder(['#школа', '#5класс', '#учёба'])
-root_folder = f"./files/class5nik"
 
-class PupilBlogger(SimpleBlogger):
+class PupilBlogger(FiniteSimpleBlogger):
     def _system_prompt(self):
         return 'Ты - блогер с 1000000 подписчиков и целевой аудиторией 12 лет, используешь в разговоре сленг и смайлики'
     
     def root_folder(self):
-        return root_folder
+        return f"./files/class5nik"
     
     def _path_constructor(self, task):
         return f"{task['category']}/{task['topic']}"
@@ -60,16 +58,35 @@ def review():
     for blogger in bloggers:
         blogger.post()
 
+def print_review():
+    bloggers = [
+        PupilReviewer(),
+        PupilReviewer(1),
+        PupilReviewer(2),
+        PupilReviewer(3),
+        PupilReviewer(4),
+    ]
+    for blogger in bloggers:
+        blogger.print_current_task()
+
 def post(index=None):
     blogger = PupilBlogger(index=index)
     blogger.post()
 
+def print_post(index=None):
+    blogger = PupilBlogger(index=index)
+    blogger.print_current_task()
+
 def init():
-    editor = Editor(root_folder,multiple_projects=True,shuffle_tasks=False)
-    editor.init_project()
+    blogger = PupilBlogger()
+    blogger.init_project()
 
 def make_tasks():
-    editor = Editor(root_folder,multiple_projects=True,shuffle_tasks=False)
-    first_post_date=date(2025, 1, 6)
-    last_post_date=date(2025, 5, 20)
-    editor.create_between(first_post_date=first_post_date, last_post_date=last_post_date)
+    blogger = PupilBlogger()
+    blogger.create_tasks_between(
+        first_post_date=date(2025, 1, 6),
+        last_post_date=date(2025, 5, 20),
+        multiple_projects=True,
+        shuffle=False
+    )
+

@@ -1,18 +1,15 @@
-from simple_blogger.blogger.auto import AutoBlogger
+from simple_blogger.blogger.auto import AutoSimpleBlogger
 from simple_blogger.poster.telegram import TelegramPoster
 from simple_blogger.poster.vk import VkPoster
 from simple_blogger.poster.instagram import InstagramPoster
-from simple_blogger.editor import Editor
 from simple_blogger.preprocessor.text import TagAdder
 from datetime import date
 
 tagadder = TagAdder(['#вмиреживотных', '#животныймир'])
-first_post_date=date(2025, 3, 11)
-root_folder = f"./files/cats_and_beasts"
 
-class AnimalBlogger(AutoBlogger):
+class AnimalBlogger(AutoSimpleBlogger):
     def root_folder(self):
-        return root_folder
+        return f"./files/cats_and_beasts"
     
     def _system_prompt(self):
         return "Ты - специалист по животным, блоггер с 1000000 подписчиков, умеющий заинтересовать аудиторию в изучении животного мира"
@@ -33,29 +30,31 @@ class AnimalBlogger(AutoBlogger):
             InstagramPoster(account_token_name='CATS_AND_BEASTS_TOKEN', processor=tagadder)
         ]
 
-    def __init__(self, posters=None, first_post_date=first_post_date, force_rebuild=False):
-        super().__init__(posters=posters or self._posters(), first_post_date=first_post_date, force_rebuild=force_rebuild)
+    def __init__(self, posters=None, first_post_date=date(2025, 3, 11)):
+        super().__init__(posters=posters or self._posters(), first_post_date=first_post_date)
 
-class AnimalReviewer(AnimalBlogger):
-    def _check_task(self, task, tasks, days_before=1):
-        return super()._check_task(task, tasks, days_before)
+# class AnimalReviewer(AnimalBlogger):
+#     def _check_task(self, task, tasks, days_before=1):
+#         return super()._check_task(task, tasks, days_before)
     
 
-def review():
-    blogger = AnimalReviewer(
+# def review():
+#     blogger = AnimalReviewer(
+#         posters=[TelegramPoster(processor=tagadder)],
+#         force_rebuild=True
+#     )
+#     blogger.post()
+
+def post():
+    blogger = AnimalBlogger(
         posters=[TelegramPoster(processor=tagadder)],
-        force_rebuild=True
     )
     blogger.post()
 
-def post():
-    blogger = AnimalBlogger()
-    blogger.post()
-
 def init():
-    editor = Editor(root_folder)
-    editor.init_project()
+    blogger = AnimalBlogger()
+    blogger.init_project()
 
 def make_tasks():
-    editor = Editor(root_folder)
-    editor.create_auto(day_offset=-261)
+    blogger = AnimalBlogger()
+    blogger.create_auto_tasks(day_offset=-261)

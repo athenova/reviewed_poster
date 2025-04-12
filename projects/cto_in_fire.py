@@ -1,18 +1,15 @@
-from simple_blogger.blogger.auto import AutoBlogger
+from simple_blogger.blogger.auto.cached import CachedAutoSimpleBlogger
 from simple_blogger.poster.telegram import TelegramPoster
 from simple_blogger.poster.vk import VkPoster
-from simple_blogger.editor import Editor
 from simple_blogger.preprocessor.text import TagAdder
 from simple_blogger.generator.openai import OpenAiTextGenerator, OpenAiImageGenerator
 from datetime import date
 
 tagadder = TagAdder(['#cto', '#it', '#ит', '#айти', '#проблемы', '#решения'])
-first_post_date=date(2025, 3, 3)
-root_folder = f"./files/cto_in_fire"
 
-class CtoBlogger(AutoBlogger):
+class CtoBlogger(CachedAutoSimpleBlogger):
     def root_folder(self):
-        return root_folder
+        return f"./files/cto_in_fire"
     
     def _path_constructor(self, task):
         return f"{task['category']}/{task['problem']}"
@@ -38,7 +35,7 @@ class CtoBlogger(AutoBlogger):
             VkPoster(group_id='229837981', processor=tagadder)
         ]
 
-    def __init__(self, posters=None, first_post_date=first_post_date, force_rebuild=False):
+    def __init__(self, posters=None, first_post_date=date(2025, 3, 3), force_rebuild=False):
         super().__init__(posters=posters or self._posters(), first_post_date=first_post_date, force_rebuild=force_rebuild)
 
 class CtoReviewer(CtoBlogger):
@@ -57,9 +54,9 @@ def post():
     blogger.post()
 
 def init():
-    editor = Editor(root_folder)
-    editor.init_project()
+    blogger = CtoBlogger()
+    blogger.init_project()
 
 def make_tasks():
-    editor = Editor(root_folder)
-    editor.create_auto()
+    blogger = CtoBlogger()
+    blogger.create_auto_tasks()

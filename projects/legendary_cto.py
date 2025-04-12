@@ -1,18 +1,16 @@
-from simple_blogger.blogger.basic import SimpleBlogger
+from simple_blogger.blogger.finite.cached import CachedFiniteSimpleBlogger
 from simple_blogger.poster.telegram import TelegramPoster
 from simple_blogger.poster.vk import VkPoster
-from simple_blogger.editor import Editor
 from simple_blogger.preprocessor.text import TagAdder
 from simple_blogger.generator.deepseek import DeepSeekTextGenerator
 from simple_blogger.generator.yandex import YandexImageGenerator
 from datetime import date
 
 tagadder = TagAdder(['#cto', '#it', '#ит', '#айти', '#легенды'])
-root_folder = f"./files/legendary_cto_in"
 
-class LegendaryCtoBlogger(SimpleBlogger):
+class LegendaryCtoBlogger(CachedFiniteSimpleBlogger):
     def root_folder(self):
-        return root_folder
+        return f"./files/legendary_cto_in"
     
     def _path_constructor(self, task):
         return f"{task['company']}/{task['name']}"
@@ -56,9 +54,9 @@ def post():
     blogger.post()
 
 def init():
-    editor = Editor(root_folder)
-    editor.init_project()
+    blogger = LegendaryCtoBlogger()
+    blogger.init_project()
 
 def make_tasks():
-    editor = Editor(root_folder)
-    editor.create_simple(first_post_date=date(2025, 3, 9), days_between_posts=7)
+    blogger = LegendaryCtoBlogger()
+    blogger.create_simple_tasks(first_post_date=date(2025, 3, 9), days_between_posts=7)

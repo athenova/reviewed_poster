@@ -1,8 +1,7 @@
-from simple_blogger.blogger.basic import SimpleBlogger
+from simple_blogger.blogger.finite import FiniteSimpleBlogger
 from simple_blogger.poster.telegram import TelegramPoster
 from simple_blogger.poster.vk import VkPoster
 from simple_blogger.poster.instagram import InstagramPoster
-from simple_blogger.editor import Editor
 from simple_blogger.preprocessor.text import TagAdder
 from simple_blogger.generator.openai import OpenAiTextGenerator, OpenAiImageGenerator
 from datetime import date
@@ -10,7 +9,7 @@ from datetime import date
 tagadder = TagAdder(['#иллюстрации', '#книги', '#литература'])
 root_folder = f"./files/illustrator_the"
 
-class IllustratorBlogger(SimpleBlogger):
+class IllustratorBlogger(FiniteSimpleBlogger):
     def _system_prompt(self):
         return 'Ты - книгоман'
     
@@ -57,10 +56,9 @@ def post():
     blogger.post()
 
 def init():
-    editor = Editor(root_folder)
-    editor.init_project()
+    blogger = IllustratorBlogger()
+    blogger.init_project()
 
 def make_tasks():
-    editor = Editor(root_folder)
-    first_post_date=date(2025, 4, 7)
-    editor.create_simple(first_post_date=first_post_date)
+    blogger = IllustratorBlogger()
+    blogger.create_simple_tasks(date(2025, 4, 7))

@@ -1,18 +1,16 @@
-from simple_blogger.blogger.basic import SimpleBlogger
+from simple_blogger.blogger.finite.cached  import CachedFiniteSimpleBlogger
 from simple_blogger.poster.telegram import TelegramPoster
 from simple_blogger.poster.vk import VkPoster
 from simple_blogger.poster.instagram import InstagramPoster
-from simple_blogger.editor import Editor
 from simple_blogger.preprocessor.text import TagAdder
 from simple_blogger.generator.openai import OpenAiTextGenerator, OpenAiImageGenerator
 from datetime import date
 
 tagadder = TagAdder(['#интересныетеории', '#теории'])
-root_folder = f"./files/theory_the"
 
-class TheoristBlogger(SimpleBlogger):
+class TheoristBlogger(CachedFiniteSimpleBlogger):
     def root_folder(self):
-        return root_folder
+        return f"./files/theory_the"
     
     def _path_constructor(self, task):
         return f"{task['domain']},{task['category']}/{task['name']}"
@@ -54,10 +52,9 @@ def post():
     blogger.post()
 
 def init():
-    editor = Editor(root_folder)
-    editor.init_project()
+    blogger = TheoristBlogger()
+    blogger.init_project()
 
 def make_tasks():
-    editor = Editor(root_folder)
-    first_post_date=date(2025, 4, 7)
-    editor.create_simple(first_post_date=first_post_date)
+    blogger = TheoristBlogger()
+    blogger.create_simple_tasks(first_post_date=date(2025, 4, 7))

@@ -52,9 +52,17 @@ def review():
     )
     blogger.post()
 
+def print_review():
+    blogger = HumanizedReviewer()
+    blogger.print_tasks()
+
 def post():
     blogger = HumanizedBlogger()
     blogger.post()
+
+def print_post():
+    blogger = HumanizedBlogger()
+    blogger.print_tasks()
 
 def init():
     editor = Editor(root_folder)
@@ -64,3 +72,5 @@ def make_tasks():
     editor = Editor(root_folder)
     first_post_date=date(2025, 3, 26)
     editor.create_simple(first_post_date=first_post_date)
+
+print_review()
