@@ -1,4 +1,4 @@
-from simple_blogger.blogger.finite import FiniteSimpleBlogger
+from simple_blogger.blogger.finite.cached import CachedFiniteSimpleBlogger
 from simple_blogger.poster.telegram import TelegramPoster
 from simple_blogger.poster.vk import VkPoster
 from simple_blogger.poster.instagram import InstagramPoster
@@ -8,7 +8,7 @@ from datetime import date
 
 tagadder = TagAdder(['#иллюстрации', '#книги', '#литература'])
 
-class IllustratorBlogger(FiniteSimpleBlogger):
+class IllustratorBlogger(CachedFiniteSimpleBlogger):
     def _system_prompt(self):
         return 'Ты - книгоман'
     

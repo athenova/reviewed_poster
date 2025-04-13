@@ -1,4 +1,4 @@
-from simple_blogger.blogger.finite.cached import CachedFiniteCommonBlogger
+from simple_blogger.blogger.finite.cached import CachedFiniteSimpleBlogger
 from simple_blogger.poster.telegram import TelegramPoster
 from simple_blogger.poster.vk import VkPoster
 from simple_blogger.poster.instagram import InstagramPoster
@@ -8,7 +8,7 @@ from datetime import date
 
 tagadder = TagAdder(['#иллюстрации', '#фантазии'])
 
-class HumanizedBlogger(CachedFiniteCommonBlogger):
+class HumanizedBlogger(CachedFiniteSimpleBlogger):
     def _system_prompt(self):
         return 'Ты - художник с образованием психолога'
     
@@ -41,7 +41,7 @@ class HumanizedBlogger(CachedFiniteCommonBlogger):
         super().__init__(posters or self._posters(), force_rebuild)
 
 class HumanizedReviewer(HumanizedBlogger):
-    def _check_task(self, task, days_before=1, **_):
+    def _check_task(self, task, days_before=0, **_):
         return super()._check_task(task, days_before, **_)
 
 def review():
