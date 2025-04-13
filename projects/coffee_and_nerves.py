@@ -36,7 +36,7 @@ class HrBlogger(CachedAutoSimpleBlogger):
         ]
 
     def __init__(self, posters=None, first_post_date=date(2025, 3, 6), force_rebuild=False):
-        super().__init__(posters=posters or self._posters(), first_post_date=first_post_date, force_rebuild=force_rebuild)
+        super().__init__(posters or self._posters(), first_post_date, force_rebuild)
 
 class HrReviewer(HrBlogger):
     def _check_task(self, task, tasks, days_before=1):
