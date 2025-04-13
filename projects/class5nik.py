@@ -1,4 +1,4 @@
-from simple_blogger.blogger.finite import FiniteSimpleBlogger
+from simple_blogger.blogger.finite.cached import CachedFiniteSimpleBlogger
 from simple_blogger.poster.telegram import TelegramPoster
 from simple_blogger.poster.vk import VkPoster
 from simple_blogger.preprocessor.text import TagAdder
@@ -7,7 +7,7 @@ from datetime import date
 
 tagadder = TagAdder(['#школа', '#5класс', '#учёба'])
 
-class PupilBlogger(FiniteSimpleBlogger):
+class PupilBlogger(CachedFiniteSimpleBlogger):
     def _system_prompt(self):
         return 'Ты - блогер с 1000000 подписчиков и целевой аудиторией 12 лет, используешь в разговоре сленг и смайлики'
     
@@ -37,15 +37,15 @@ class PupilBlogger(FiniteSimpleBlogger):
             VkPoster(group_id='229821544', processor=tagadder)
         ]
 
-    def __init__(self, posters=None, index=None):
-        super().__init__(posters=posters or self._posters(),index=index)
+    def __init__(self, posters=None, force_rebuild=False, index=None):
+        super().__init__(posters or self._posters(), force_rebuild, index)
 
 class PupilReviewer(PupilBlogger):
     def _check_task(self, task, days_before=1, **_):
         return super()._check_task(task, days_before, **_)
     
     def __init__(self, index=None):
-        super().__init__([TelegramPoster(processor=tagadder)], index)
+        super().__init__([TelegramPoster(processor=tagadder)], True, index)
 
 def review():
     bloggers = [

@@ -7,14 +7,13 @@ from simple_blogger.generator.openai import OpenAiTextGenerator, OpenAiImageGene
 from datetime import date
 
 tagadder = TagAdder(['#иллюстрации', '#книги', '#литература'])
-root_folder = f"./files/illustrator_the"
 
 class IllustratorBlogger(FiniteSimpleBlogger):
     def _system_prompt(self):
         return 'Ты - книгоман'
     
     def root_folder(self):
-        return root_folder
+        return f"./files/illustrator_the"
     
     def _path_constructor(self, task):
         return f"{task['author']},{task['book']}/{task['name']}"

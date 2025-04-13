@@ -5,11 +5,10 @@ from simple_blogger.generator.openai import OpenAiTextGenerator
 from datetime import date
 
 tagadder = TagAdder(['#новыеслова', '#развитие'])
-root_folder = f"./files/one_day_word"
 
 class SkillBlogger(CachedFiniteSimpleBlogger):
     def root_folder(self):
-        return root_folder
+        return f"./files/one_day_word"
     
     def _path_constructor(self, task):
         return f"{task['category']}/{task['topic']}"
@@ -28,8 +27,8 @@ class SkillBlogger(CachedFiniteSimpleBlogger):
             TelegramPoster(chat_id='@one_day_word', processor=tagadder)
         ]
 
-    def __init__(self, posters=None):
-        super().__init__(posters=posters or self._posters())
+    def __init__(self, posters=None, force_rebuild=False):
+        super().__init__(posters or self._posters(), force_rebuild)
 
 class SkillReviewer(SkillBlogger):
     def _check_task(self, task, days_before=1, **_):
@@ -37,7 +36,8 @@ class SkillReviewer(SkillBlogger):
 
 def review():
     blogger = SkillReviewer(
-        posters=[TelegramPoster(processor=tagadder)]
+        posters=[TelegramPoster(processor=tagadder)],
+        force_rebuild=True
     )
     blogger.post()
 

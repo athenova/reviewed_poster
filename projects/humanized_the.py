@@ -1,21 +1,19 @@
-from simple_blogger.blogger.basic import SimpleBlogger
+from simple_blogger.blogger.finite.cached import CachedFiniteCommonBlogger
 from simple_blogger.poster.telegram import TelegramPoster
 from simple_blogger.poster.vk import VkPoster
 from simple_blogger.poster.instagram import InstagramPoster
-from simple_blogger.editor import Editor
 from simple_blogger.preprocessor.text import TagAdder
 from simple_blogger.generator.openai import OpenAiTextGenerator, OpenAiImageGenerator
 from datetime import date
 
 tagadder = TagAdder(['#иллюстрации', '#фантазии'])
-root_folder = f"./files/humanized_the"
 
-class HumanizedBlogger(SimpleBlogger):
+class HumanizedBlogger(CachedFiniteCommonBlogger):
     def _system_prompt(self):
         return 'Ты - художник с образованием психолога'
     
     def root_folder(self):
-        return root_folder
+        return f"./files/humanized_the"
     
     def _path_constructor(self, task):
         return f"{task['group']}/{task['name']}"
@@ -39,8 +37,8 @@ class HumanizedBlogger(SimpleBlogger):
             InstagramPoster(account_token_name='HUMANIZED_THE_TOKEN', account_id='9396881250388941', processor=tagadder)
         ]
 
-    def __init__(self, posters=None):
-        super().__init__(posters=posters or self._posters())
+    def __init__(self, posters=None, force_rebuild=False):
+        super().__init__(posters or self._posters(), force_rebuild)
 
 class HumanizedReviewer(HumanizedBlogger):
     def _check_task(self, task, days_before=1, **_):
@@ -48,7 +46,8 @@ class HumanizedReviewer(HumanizedBlogger):
 
 def review():
     blogger = HumanizedReviewer(
-        posters=[TelegramPoster(processor=tagadder)]
+        posters=[TelegramPoster(processor=tagadder)],
+        force_rebuild=True
     )
     blogger.post()
 
@@ -65,12 +64,9 @@ def print_post():
     blogger.print_tasks()
 
 def init():
-    editor = Editor(root_folder)
-    editor.init_project()
+    blogger = HumanizedBlogger()
+    blogger.init_project()
 
 def make_tasks():
-    editor = Editor(root_folder)
-    first_post_date=date(2025, 3, 26)
-    editor.create_simple(first_post_date=first_post_date)
-
-print_review()
+    blogger = HumanizedBlogger()
+    blogger.create_simple_tasks(first_post_date=date(2025, 3, 26))

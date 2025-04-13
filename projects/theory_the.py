@@ -34,8 +34,8 @@ class TheoristBlogger(CachedFiniteSimpleBlogger):
             InstagramPoster(account_token_name='IN_THEORY_THE_TOKEN', account_id='9431105350315600', processor=tagadder)
         ]
 
-    def __init__(self, posters=None):
-        super().__init__(posters=posters or self._posters())
+    def __init__(self, posters=None, force_rebuild=False):
+        super().__init__(posters or self._posters(), force_rebuild)
 
 class TheoristReviewer(TheoristBlogger):
     def _check_task(self, task, days_before=1, **_):
@@ -43,7 +43,8 @@ class TheoristReviewer(TheoristBlogger):
 
 def review():
     blogger = TheoristReviewer(
-        posters=[TelegramPoster(processor=tagadder)]
+        posters=[TelegramPoster(processor=tagadder)],
+        force_rebuild=True
     )
     blogger.post()
 

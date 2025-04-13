@@ -45,7 +45,8 @@ class ReaderReviewer(ReaderBlogger):
     
 def review():
     blogger = ReaderReviewer(
-        posters=[TelegramPoster(processor=tagadder)]
+        posters=[TelegramPoster(processor=tagadder)],
+        force_rebuild=True
     )
     blogger.post()
 

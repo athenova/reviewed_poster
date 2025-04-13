@@ -1,4 +1,4 @@
-from simple_blogger.blogger.auto import AutoSimpleBlogger
+from simple_blogger.blogger.auto import AutoCommonBlogger
 from simple_blogger.poster.telegram import TelegramPoster
 from simple_blogger.poster.vk import VkPoster
 from simple_blogger.poster.instagram import InstagramPoster
@@ -7,7 +7,7 @@ from datetime import date
 
 tagadder = TagAdder(['#вмиреживотных', '#животныймир'])
 
-class AnimalBlogger(AutoSimpleBlogger):
+class AnimalBlogger(AutoCommonBlogger):
     def root_folder(self):
         return f"./files/cats_and_beasts"
     
