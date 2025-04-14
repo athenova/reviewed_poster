@@ -54,6 +54,10 @@ def post():
     blogger = IllustratorBlogger()
     blogger.post()
 
+def print_post():
+    blogger = IllustratorReviewer()
+    blogger.print_current_task()
+
 def init():
     blogger = IllustratorBlogger()
     blogger.init_project()

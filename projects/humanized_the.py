@@ -41,7 +41,7 @@ class HumanizedBlogger(CachedFiniteSimpleBlogger):
         super().__init__(posters or self._posters(), force_rebuild)
 
 class HumanizedReviewer(HumanizedBlogger):
-    def _check_task(self, task, days_before=0, **_):
+    def _check_task(self, task, days_before=1, **_):
         return super()._check_task(task, days_before, **_)
 
 def review():
@@ -61,7 +61,7 @@ def post():
 
 def print_post():
     blogger = HumanizedBlogger()
-    blogger.print_tasks()
+    blogger.print_current_task()
 
 def init():
     blogger = HumanizedBlogger()
