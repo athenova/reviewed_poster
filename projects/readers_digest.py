@@ -18,7 +18,7 @@ class ReaderBlogger(CachedFiniteSimpleBlogger):
         return f"Ты - школьный блоггер, книгоман, прочитавший более 1000 книг, используешь в разговоре сленг {self.age}-летних подростков и смайлики"
     
     def _message_prompt_constructor(self, task):
-        return f"Расскажи {self.age}-летнему подростку без спойлеров, почему стоит прочитать книгу '{task['book']}' автора {task['author']}, используй не более 150 слов"
+        return f"Расскажи {self.age}-летнему подростку без спойлеров, почему стоит прочитать книгу '{task['book']}' автора {task['author']}, используй не более 150 слов, добавь ссылку {task['url']} на книгу"
     
     def _image_prompt_constructor(self, task):
         return f"Нарисуй картинку, вдохновлённую книгой '{task['book']}' автора {task['author']}, крупный план, глубина, гиперреализм"
@@ -60,4 +60,5 @@ def init():
 
 def make_tasks():
     blogger = ReaderBlogger()
-    blogger.create_simple_tasks(first_post_date=date(2025, 6, 9), days_between_posts=2)
+    blogger.create_simple_tasks(first_post_date=date(2025, 6, 1), days_between_posts=3)
+
