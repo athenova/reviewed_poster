@@ -22,7 +22,7 @@ class IllustratorBlogger(CachedFiniteSimpleBlogger):
         return f"Опиши '{task['name']}'({task['description'] if 'description' in task else ''}) из книги '{task['book']}' автора {task['author']}, используй не более 100 слов, используй смайлики"
     
     def _image_prompt_constructor(self, task):
-        return f"Нарисуй рисунок, вдохновлённый '{task['name']}'({task['description'] if 'description' in task else ''}) из книги '{task['book']}' автора {task['author']}"
+        return f"Нарисуй рисунок, вдохновлённый '{task['name']}'({task['description'] if 'description' in task else ''}) из книги '{task['book']}' автора {task['author']}. Не рисуй текст"
         
     def _message_generator(self):
         return OpenAiTextGenerator(self._system_prompt())
