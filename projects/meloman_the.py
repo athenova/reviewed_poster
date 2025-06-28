@@ -31,7 +31,7 @@ class MelomanBlogger(CachedFiniteSimpleBlogger):
         return [
             TelegramPoster(chat_id='@meloman_the', processor=tagadder),
             VkPoster(group_id='229821806', processor=tagadder),
-            InstagramPoster(account_token_name='MELOMAN_THE_TOKEN', account_id='28744401475175260', processor=tagadder)
+            # InstagramPoster(account_token_name='MELOMAN_THE_TOKEN', account_id='28744401475175260', processor=tagadder)
         ]
 
     def __init__(self, posters=None):

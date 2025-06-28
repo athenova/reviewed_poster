@@ -34,7 +34,7 @@ class IllustratorBlogger(CachedFiniteSimpleBlogger):
         return [
             TelegramPoster(chat_id='@illustrator_the', processor=tagadder),
             VkPoster(group_id='229821765', processor=tagadder),
-            InstagramPoster(account_token_name='ILLUSTRATOR_THE_TOKEN', account_id='9351594524905971', processor=tagadder)
+            # InstagramPoster(account_token_name='ILLUSTRATOR_THE_TOKEN', account_id='9351594524905971', processor=tagadder)
         ]
 
     def __init__(self, posters=None):
